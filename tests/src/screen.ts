@@ -1,6 +1,6 @@
 
 /// <reference path="shared.ts"/>
-/// <reference path="airconsole-1.2.1.d.ts"/>
+/// <reference path="../../airconsole-1.2.1.d.ts"/>
 
 var air_console: AirConsole = null;
 

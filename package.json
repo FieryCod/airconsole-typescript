@@ -1,0 +1,34 @@
+{
+  "name": "airconsole-typescript",
+  "version": "1.0.0",
+  "description": "Adds typescript typings for Airconsole API",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "typescript": "^2.1.5"
+  },
+  "devDependencies": {
+    "typescript": "^2.1.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FieryCod/airconsole-typescript.git"
+  },
+  "keywords": [
+    "Airconsole",
+    "typings",
+    "types",
+    "typescript"
+  ],
+  "author": "Karol Wójcik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FieryCod/airconsole-typescript/issues"
+  },
+  "homepage": "https://github.com/FieryCod/airconsole-typescript#readme"
+}
