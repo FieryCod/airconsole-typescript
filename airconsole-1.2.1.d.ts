@@ -1,4 +1,3 @@
-
 /**
  *  An object containing information about a device in this session.
  *  @typedef {object} AirConsole~DeviceState
@@ -44,7 +43,7 @@ declare interface Config {
   /**
    *  AirConsole.ORIENTATION_PORTRAIT or AirConsole.ORIENTATION_LANDSCAPE.
    */
-  orientation: string;
+  orientation: AirConsoleConstants.ORIENTATION_PORTRAIT;
   /**
    *  If set to true, you can call getServerTime() to get the time on
    *  the game server. Default is false.
@@ -57,25 +56,28 @@ declare interface Config {
   setup_document: boolean | void;
 }
 
+declare enum AirConsoleConstants {
+  ORIENTATION_PORTRAIT = 0,
+  ORIENTATION_LANDSCAPE = 0,
+}
 
-
-declare abstract class AirConsole {
+declare class AirConsole {
   /**
    *  Your gateway object to AirConsole. There are getter and setter functions for all properties. Do not access properties of this object directly
    *  opts: Constructor config.
    *  @constructor
    *  @param {opts}
    */
-  constructor(opts?: Config | Object);
+  constructor(opts?: Config);
 
   /**
    *  The device ID of the game screen.
    */
-  static ORIENTATION_PORTRAIT: string;
+  static ORIENTATION_PORTRAIT: AirConsoleConstants.ORIENTATION_PORTRAIT;
   /**
    *  The device ID of the game screen.
    */
-  static ORIENTATION_LANDSCAPE: string;
+  static ORIENTATION_LANDSCAPE: AirConsoleConstants.ORIENTATION_LANDSCAPE;
   /**
    *  The device ID of the game screen.
    */
@@ -123,28 +125,28 @@ declare abstract class AirConsole {
   /**
    * Gets called when a device has connected and loaded the game.
    * device_id: the device ID that loaded the game.
-   * @abstract
+   * @
    * @param {number} device_id
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onConnect(device_id: number);
+  onConnect(device_id: number);
 
   /**
    * Gets called when a device has left the game.
    * device_id: the device ID that left the game.
-   * @abstract
+   * @
    * @param {number} device_id
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onDisconnect(device_id: number);
+  onDisconnect(device_id: number);
 
-  abstract onReady(code: string): void;
+  onReady(code: string): void;
   /**
   *  Sets the custom property in this devices DeviceState object.
   *  @param data {Object} The custom data to set.
   */
 
-  // END //
+  // CONNECTIVITY ENDS //
 
   // MESSAGES //
   /**
@@ -164,15 +166,28 @@ declare abstract class AirConsole {
  */
   message(device_id: number | undefined, data: any): void;
 
-  abstract onMessage(from: number, data: any): void;
+  onMessage(from: number, data: any): void;
   /**
    *  Gets called when the game console is ready.
    *  @param code {string} The AirConsole join code.
    */
 
-  //
+  // MESSAGES ENDS //
 
+  // TODO:: IMPLEMENT DEVICE STATE
 
+// DEVICE STATE // 
+
+  /**
+   * Gets the custom DeviceState of a device.
+   * Parameters:
+   * device_id: The device ID of which you want the custom state. Default is this device.
+   * @param {number} device_id
+   * @memberOf AirConsole
+   */
+  getCustomDeviceState(device_id?: number): Object | undefined;
+
+  // DEVICE STATES ENDS //
 
   /**
    * Returns the player number for a device_id, if the device_id is part of the active players previously set by the screen by calling setActivePlayers. 
@@ -209,14 +224,7 @@ declare abstract class AirConsole {
   getActivePlayerDeviceIds(): Array<number>;
 
 
-  /**
-   * Gets the custom DeviceState of a device.
-   * Parameters:
-   * device_id: The device ID of which you want the custom state. Default is this device.
-   * @param {number} device_id
-   * @memberOf AirConsole
-   */
-  getCustomDeviceState(device_id?: number): Object | undefined;
+
 
 
 
@@ -228,60 +236,60 @@ declare abstract class AirConsole {
   /**
     * Gets called when the screen sets the active players by calling setActivePlayers().
     * The player number of this device. Can be undefined if this device is not part of the active players.
-    * @abstract
+    * @
     * @param {(number | undefined)} player_number
-    * @memberOf AirConsoleAbstract
+    * @memberOf AirConsole
     */
-  abstract onActivePlayersChange(player_number: number | undefined);
+  onActivePlayersChange(player_number: number | undefined);
 
   /**
    * Gets called when an advertisement is finished or no advertisement was shown.
    * ad_was_shown: True iff an ad was shown and onAdShow was called.
-   * @abstract
+   * @
    * @param {boolean} ad_was_shown
    * 
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onAdComplete(ad_was_shown: boolean);
+  onAdComplete(ad_was_shown: boolean);
 
   /**
    * Gets called if a fullscreen advertisement is shown on this screen. In case this event gets called, please mute all sounds.
-   * @abstract
-   * @memberOf AirConsoleAbstract
+   * @
+   * @memberOf AirConsole
    */
-  abstract onAdShow();
+  onAdShow();
 
 
   /**
    * Gets called when a device updates it's custom DeviceState by calling setCustomDeviceState or setCustomDeviceStateProperty. Make sure you understand the power of device states:
-   * @abstract
+   * @
    * @param {number} device_id
    * @param {Object} custom_data
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onCustomDeviceStateChange(device_id: number, custom_data: Object);
+  onCustomDeviceStateChange(device_id: number, custom_data: Object);
 
   /**
    * Gets called every X milliseconds with device motion data iff the AirConsole was instantiated with the "device_motion" opts set to the interval in milliseconds.
    * Only works for controllers. Note: Some browsers do not allow games to access accelerometer and gyroscope in an iframe (your game). So use this method if you need gyroscope or accelerometer data.
    * data: {data.x, data.y, data.z for accelerometer data.alpha, data.beta, data.gamma for gyroscope}
-   * @abstract
+   * @
    * @param {Object} data
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onDeviceMotion(data: Object);
+  onDeviceMotion(data: Object);
 
   /**
    * Gets called when a device updates it's profile pic, nickname or email.
    * device_id: The device_id that changed its profile.
-   * @abstract
+   * @
    * @param {number} device_id
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onDeviceProfileChange(device_id: number)
+  onDeviceProfileChange(device_id: number)
 
   // FIXME:: Poprawic
-  // abstract onDeviceStateChange(device_id:number, user_data)
+  //  onDeviceStateChange(device_id:number, user_data)
 
 
 
@@ -289,11 +297,11 @@ declare abstract class AirConsole {
    * Gets called if the request of requestEmailAddress() was granted. For privacy reasons, you need to whitelist your game in order to receive the email address of the user. 
    * To whitelist your game, contact developers@airconsole.com. For development purposes, localhost is always allowed.
    * email_address: The email address of the user if it was set.
-   * @abstract
+   * @
    * @param {string|undefined} email_address
-   * @memberOf AirConsoleAbstract
+   * @memberOf AirConsole
    */
-  abstract onEmailAddress(email_address: string | undefined);
+  onEmailAddress(email_address: string | undefined);
 
   /**
    * Returns all device ids that are premium.
@@ -400,4 +408,3 @@ declare abstract class AirConsole {
    */
   showDefaultUI(visible: boolean): void;
 }
-
