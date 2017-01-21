@@ -1,10 +1,9 @@
 {
-    "version": "1.5.0-beta",
+    "compileOnSave": false,
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
         "isolatedModules": false,
-        "jsx": "react",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "declaration": false,
@@ -12,18 +11,6 @@
         "removeComments": true,
         "noLib": false,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "outDir": "compiled"
-    },
-    "filesGlob": [
-        "./**/*.ts",
-        "./**/*.tsx",
-        "!./node_modules/**/*"
-    ],
-    "files": [
-        "./airconsole-1.2.1.d.ts",
-        "./tests/src/controller.ts",
-        "./tests/src/screen.ts",
-        "./tests/src/shared.ts"
-    ]
+        "suppressImplicitAnyIndexErrors": true  
+    }
 }
