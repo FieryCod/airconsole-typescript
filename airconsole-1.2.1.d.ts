@@ -7,7 +7,6 @@
  *  @property {boolean|undefined} slow_connection - If the user has a high server latency.
  */
 interface DeviceState {
-
   /**
   *  The globally unique ID of the user.
   */
@@ -15,15 +14,15 @@ interface DeviceState {
   /**
   *  Custom device data that this API can set.
   */
-  custom: string | void;
+  custom: string | undefined;
   /**
   *  The nickname of the user.
   */
-  nickname: string | void;
+  nickname: string | undefined;
   /**
    *  If the user has a high server latency.
    */
-  slow_connection: boolean | void;
+  slow_connection: boolean | undefined;
 }
 
 /**
@@ -61,7 +60,7 @@ declare enum AirConsoleConstants {
   ORIENTATION_LANDSCAPE = 0,
 }
 
-declare class AirConsole {
+export declare class AirConsole {
   /**
    *  Your gateway object to AirConsole. There are getter and setter functions for all properties. Do not access properties of this object directly
    *  opts: Constructor config.
@@ -174,9 +173,8 @@ declare class AirConsole {
 
   // MESSAGES ENDS //
 
-  // TODO:: IMPLEMENT DEVICE STATE
 
-// DEVICE STATE // 
+  // DEVICE STATE // 
 
   /**
    * Gets the custom DeviceState of a device.
@@ -187,8 +185,123 @@ declare class AirConsole {
    */
   getCustomDeviceState(device_id?: number): Object | undefined;
 
+  /**
+    * Gets called when a device updates it's custom DeviceState by calling setCustomDeviceState or setCustomDeviceStateProperty. Make sure you understand the power of device states:
+    * @
+    * @param {number} device_id
+    * @param {Object} custom_data
+    * @memberOf AirConsole
+    */
+  onCustomDeviceStateChange(device_id: number, custom_data: Object);
+
+
+  /**
+   * Gets called when a device joins/leaves a game session or updates its DeviceState (custom DeviceState, profile pic, nickname, internal state). 
+   * This is function is also called every time onConnect, onDisconnect or onCustomDeviceStateChange, onDeviceProfileChange is called. It's like their root function.
+   * device_id: the device_id that changed its DeviceState.
+   * user_data: the data of that device. If undefined, the device has left.
+   * @param {number} device_id
+   * @param {DeviceState} user_data
+   * 
+   * @memberOf AirConsole
+   */
+  onDeviceStateChange(device_id: number, user_data: DeviceState);
+
+  /**
+   * Sets the custom DeviceState of this device.
+   * data: 	The custom data to set.
+   * @param {Object} data
+   * @memberOf AirConsole
+   */
+  setCustomDeviceState(data: Object);
+
+
+  /**
+   * Sets a property in the custom DeviceState of this device.
+   * key: The property name.
+   * value: The property value
+   * @param {string} key
+   * @param {*} value
+   * @memberOf AirConsole
+   */
+  setCustomDeviceStateProperty(key: string, value: any)
   // DEVICE STATES ENDS //
 
+
+  // PROFILE //
+  /**
+   * Lets the user change his nickname, profile picture and email address. If you need a real nickname of the user, use this function. onDeviceProfileChange will be called if the user logs in.
+   * @memberOf AirConsole
+   */
+  editProfile(): void;
+
+  /**
+  * Returns the nickname of a user.
+  * device_id: The device id for which you want the nickname. Default is this device. Screens don't have nicknames.
+  * @param {number} [device_id]
+  * @returns {(string | undefined)}
+  * @memberOf AirConsole
+  */
+  getNickname(device_id?: number): string | undefined;
+
+  /**
+  * Returns the url to a profile picture of the user.
+  * device_id: The device id or uid for which you want the profile picture. Default is the current user. Screens don't have profile pictures.
+  * size: The size of in pixels of the picture. Default is 64.
+  * @param {(number | string)} [device_id_or_uid]
+  * @param {number} [size]
+  * @memberOf AirConsole
+  */
+  getProfilePictures(device_id_or_uid?: number | string, size?: number)
+
+    /**
+   * Returns the globally unique id of a device.
+   * device_id: The device id for which you want the uid. Default is this device.
+   * @param {number} [device_id]
+   * @returns {(string|undefined)}
+   * @memberOf AirConsole
+   */
+  getUID(device_id?: number): string | undefined;
+
+   /**
+   * Returns true if a user is logged in.
+   * device_id: The device_id of the user. Default is this device.
+   * @param {number} [device_id]
+   * @returns {boolean}
+   * @memberOf AirConsole
+   */
+  isUserLoggedIn(device_id?: number): boolean;
+
+    /**
+   * Gets called when a device updates it's profile pic, nickname or email.
+   * device_id: The device_id that changed its profile.
+   * @
+   * @param {number} device_id
+   * @memberOf AirConsole
+   */
+  onDeviceProfileChange(device_id: number);
+
+   /**
+   * Gets called if the request of requestEmailAddress() was granted. For privacy reasons, you need to whitelist your game in order to receive the email address of the user. 
+   * To whitelist your game, contact developers@airconsole.com. For development purposes, localhost is always allowed.
+   * email_address: The email address of the user if it was set.
+   * @
+   * @param {string|undefined} email_address
+   * @memberOf AirConsole
+   */
+  onEmailAddress(email_address: string | undefined);
+
+  /**
+   * Requests the email address of this device and calls onEmailAddress iff the request was granted. 
+   * For privacy reasons, you need to whitelist your game in order to receive the email address of the user. 
+   * To whitelist your game, contact developers@airconsole.com. For development purposes, localhost is always allowed.
+   * @memberOf AirConsole
+   */
+  requestEmailAddress():void;
+  // PROFILE ENDS //
+
+  // ACTIVE PLAYERS //
+  // ACTIVE PLAYERS ENDS //
   /**
    * Returns the player number for a device_id, if the device_id is part of the active players previously set by the screen by calling setActivePlayers. 
    * Player numbers are zero based and are consecutive. If the device_id is not part of the active players, this function returns undefined.
@@ -207,13 +320,6 @@ declare class AirConsole {
    * @memberOf AirConsole
    */
   convertPlayerNumberToDeviceId(player_number: number): number | undefined;
-
-
-  /**
-   * Lets the user change his nickname, profile picture and email address. If you need a real nickname of the user, use this function. onDeviceProfileChange will be called if the user logs in.
-   * @memberOf AirConsole
-   */
-  editProfile(): void;
 
   /**
    * Returns an array of device_ids of the active players previously set by the screen by calling setActivePlayers. 
@@ -259,16 +365,6 @@ declare class AirConsole {
    */
   onAdShow();
 
-
-  /**
-   * Gets called when a device updates it's custom DeviceState by calling setCustomDeviceState or setCustomDeviceStateProperty. Make sure you understand the power of device states:
-   * @
-   * @param {number} device_id
-   * @param {Object} custom_data
-   * @memberOf AirConsole
-   */
-  onCustomDeviceStateChange(device_id: number, custom_data: Object);
-
   /**
    * Gets called every X milliseconds with device motion data iff the AirConsole was instantiated with the "device_motion" opts set to the interval in milliseconds.
    * Only works for controllers. Note: Some browsers do not allow games to access accelerometer and gyroscope in an iframe (your game). So use this method if you need gyroscope or accelerometer data.
@@ -279,29 +375,6 @@ declare class AirConsole {
    */
   onDeviceMotion(data: Object);
 
-  /**
-   * Gets called when a device updates it's profile pic, nickname or email.
-   * device_id: The device_id that changed its profile.
-   * @
-   * @param {number} device_id
-   * @memberOf AirConsole
-   */
-  onDeviceProfileChange(device_id: number)
-
-  // FIXME:: Poprawic
-  //  onDeviceStateChange(device_id:number, user_data)
-
-
-
-  /**
-   * Gets called if the request of requestEmailAddress() was granted. For privacy reasons, you need to whitelist your game in order to receive the email address of the user. 
-   * To whitelist your game, contact developers@airconsole.com. For development purposes, localhost is always allowed.
-   * email_address: The email address of the user if it was set.
-   * @
-   * @param {string|undefined} email_address
-   * @memberOf AirConsole
-   */
-  onEmailAddress(email_address: string | undefined);
 
   /**
    * Returns all device ids that are premium.
@@ -310,25 +383,7 @@ declare class AirConsole {
    */
   getPremiumDeviceIds(): Array<number>;
 
-  /**
-   * Returns the url to a profile picture of the user.
-   * device_id: The device id or uid for which you want the profile picture. Default is the current user. Screens don't have profile pictures.
-   * size: The size of in pixels of the picture. Default is 64.
-   * @param {(number | string)} [device_id_or_uid]
-   * @param {number} [size]
-   * @memberOf AirConsole
-   */
-  getProfilePictures(device_id_or_uid?: number | string, size?: number)
 
-
-  /**
-   * Returns the globally unique id of a device.
-   * device_id: The device id for which you want the uid. Default is this device.
-   * @param {number} [device_id]
-   * @returns {(string|undefined)}
-   * @memberOf AirConsole
-   */
-  getUID(device_id?: number): string | undefined;
 
   /**
    * Returns true if the device is premium
@@ -338,16 +393,6 @@ declare class AirConsole {
    * @memberOf AirConsole
    */
   isPremium(device_id?: number): boolean | undefined;
-
-  /**
-   * Returns true if a user is logged in.
-   * device_id: The device_id of the user. Default is this device.
-   * @param {number} [device_id]
-   * @returns {boolean}
-   * @memberOf AirConsole
-   */
-  isUserLoggedIn(device_id?: number): boolean;
-
 
   /**
    * Request that all devices return to the AirConsole store.
@@ -365,14 +410,7 @@ declare class AirConsole {
 
 
 
-  /**
-   * Returns the nickname of a user.
-   * device_id: The device id for which you want the nickname. Default is this device. Screens don't have nicknames.
-   * @param {number} [device_id]
-   * @returns {(string | undefined)}
-   * @memberOf AirConsole
-   */
-  getNickname(device_id?: number): string | undefined;
+
 
   /**
    *  Returns the current time of the game server. Can only be called if the AirConsole was instantiated
@@ -391,16 +429,11 @@ declare class AirConsole {
    *  @param user_data {DeviceState} the data of that device. If undefined, the device has left.
    */
   onDeviceStateChange(device_id, user_data: DeviceState | Object): void;
-  /**
-   *  @param from {number} The device ID that sent the message.
-   *  @param data {any} The data that was sent.
-   */
 
-  setCustomDeviceState(data: DeviceState | Object): void;
   /**
-   *  Sets the device orientation.
-   *  @param orientation {string} AirConsole.ORIENTATION_PORTRAIT or AirConsole.ORIENTATION_LANDSCAPE.
-   */
+    *  Sets the device orientation.
+    *  @param orientation {string} AirConsole.ORIENTATION_PORTRAIT or AirConsole.ORIENTATION_LANDSCAPE.
+    */
   setOrientation(orientation: string): void;
   /**
    *  Shows or hides the default UI.

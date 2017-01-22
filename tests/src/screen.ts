@@ -1,7 +1,4 @@
-
-/// <reference path="shared.ts"/>
-/// <reference path="../../airconsole-1.2.1.d.ts"/>
-
+import { AirConsole } from "../../airconsole-1.2.1";
 
 window.onload = function () {
 
