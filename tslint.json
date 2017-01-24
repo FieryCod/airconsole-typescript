@@ -10,7 +10,7 @@
         "no-var-keyword": true,
         "one-line": [true, "check-open-brace", "check-whitespace"],
         "quotemark": [true, "double"],
-        "semicolon": true,
+        "semicolon": [true],
         "triple-equals": [true, "allow-null-check"],
         "typedef-whitespace": [true, {
             "call-signature": "nospace",
@@ -35,7 +35,7 @@
         "no-trailing-whitespace": true,
         "one-line": [true, "check-open-brace", "check-whitespace"],
         "quotemark": [true, "double"],
-        "semicolon": false,
+        "semicolon": [false],
         "triple-equals": [true, "allow-null-check"],
         "variable-name": [true, "ban-keywords"],
         "whitespace": [true,

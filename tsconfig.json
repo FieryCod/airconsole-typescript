@@ -10,7 +10,11 @@
         "noImplicitAny": false,
         "removeComments": true,
         "noLib": false,
+        "baseUrl": "types",
+        "typeRoots": [
+            "types"
+        ],
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true  
+        "suppressImplicitAnyIndexErrors": true
     }
 }
