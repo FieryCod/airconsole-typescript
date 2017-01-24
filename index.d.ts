@@ -370,7 +370,7 @@ declare namespace AirConsole {
      * 
      * @memberOf AirConsole
      */
-    onDeviceStateChange(device_id: number, user_data: DeviceState);
+    onDeviceStateChange(device_id: number, user_data: DeviceState): void;
 
     /**
      * Sets the custom DeviceState of this device.
@@ -379,7 +379,7 @@ declare namespace AirConsole {
      * @param {Object} data
      * @memberOf AirConsole
      */
-    setCustomDeviceState(data: Object);
+    setCustomDeviceState(data: Object): void;
 
 
     /**
@@ -391,7 +391,7 @@ declare namespace AirConsole {
      * @param {*} value
      * @memberOf AirConsole
      */
-    setCustomDeviceStateProperty(key: string, value: any)
+    setCustomDeviceStateProperty(key: string, value: any): void;
     // DEVICE STATES ENDS //
 
 
@@ -449,7 +449,7 @@ declare namespace AirConsole {
    * @param {number} device_id
    * @memberOf AirConsole
    */
-    onDeviceProfileChange(device_id: number);
+    onDeviceProfileChange(device_id: number): void;
 
     /**
     * Gets called if the request of requestEmailAddress() was granted. For privacy reasons, you need to whitelist your game in order to receive the email address of the user. 
@@ -458,7 +458,7 @@ declare namespace AirConsole {
     * @param {string|undefined} email_address
     * @memberOf AirConsole
     */
-    onEmailAddress(email_address: string | undefined);
+    onEmailAddress(email_address: string | undefined): void;
 
     /**
      * Requests the email address of this device and calls onEmailAddress iff the request was granted. 
