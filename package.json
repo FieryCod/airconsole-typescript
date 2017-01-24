@@ -1,14 +1,13 @@
 {
   "name": "airconsole-typescript",
   "version": "1.0.0",
+  "types": ".",
   "description": "Adds typescript typings for Airconsole API",
-  "main": "index.js",
   "dependencies": {
     "typescript": "^2.1.5"
   },
   "devDependencies": {
-    "tslint": "^4.3.1",
-    "typescript": "^2.1.5"
+    "tslint": "^4.3.1"
   },
   "repository": {
     "type": "git",

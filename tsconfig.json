@@ -1,20 +1,23 @@
 {
-    "compileOnSave": false,
     "compilerOptions": {
-        "target": "es5",
         "module": "commonjs",
-        "isolatedModules": false,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "declaration": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "noLib": false,
-        "baseUrl": "types",
-        "typeRoots": [
-            "types"
+        "lib": [
+            "es6",
+            "dom"
         ],
-        "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
-    }
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": false,
+        "baseUrl": "../",
+        "typeRoots": [
+            "../"
+        ],
+        "types": [],
+        "noEmit": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "files": [
+        "index.d.ts",
+        "test.ts"
+    ]
 }
