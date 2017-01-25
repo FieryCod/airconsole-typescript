@@ -17,7 +17,7 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [
-        "index.d.ts",
-        "test.ts"
+        "airconsole-typescript.d.ts",
+        "airconsole-typescript-test.ts"
     ]
 }

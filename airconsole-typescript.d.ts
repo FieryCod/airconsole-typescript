@@ -1,214 +1,184 @@
-declare namespace AirConsole {
+// Type definitions for [airconsole-typescript]
+// Project: [https://developers.airconsole.com/#!/api]
+// Definitions by: [Karol Wójcik] <https://github.com/FieryCod/>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
+declare global {
+  namespace AirConsoleStates {
   /** 
-   * DeviceState contains information about a device in this session. Use the helper methods getUID, getNickname, getProfilePicture and getCustomDeviceState to access this data.
-   * @interface DeviceState
-   */
-  export interface DeviceState {
+    * DeviceState contains information about a device in this session. Use the helper methods getUID, getNickname, getProfilePicture and getCustomDeviceState to access this data.
+    * @interface DeviceState
+    */interface DeviceState {
+
+      /**
+       * The globally unique ID of the user.
+       * @type {string}
+       * @memberOf DeviceState
+       */
+      uid: string;
+
+      /**
+       * Custom device data that this API can set.
+       * @type {(string | undefined)}
+       * @memberOf DeviceState
+       */
+      custom: string | undefined;
+
+      /**
+       * The nickname of the user.
+       * @type {(string | undefined)}
+       * @memberOf DeviceState
+       */
+      nickname: string | undefined;
+
+      /**
+       * 	If the user has a high server latency.
+       * @type {boolean}
+       * @memberOf DeviceState
+       */
+      slow_connection: boolean
+    }
+    type orientation = AirConsoleConstants.ORIENTATION_LANDSCAPE | AirConsoleConstants.ORIENTATION_PORTRAIT;
 
     /**
-     * The globally unique ID of the user.
-     * @type {string}
-     * @memberOf DeviceState
+     * The configuration for the AirConsole constructor.
+     * @interface Config
      */
-    uid: string;
+    interface Config {
+      orientation: orientation;
+      synchronize_time?: boolean;
+      setup_document?: boolean;
+      device_motion?: number;
+    }
 
-    /**
-     * Custom device data that this API can set.
-     * @type {(string | undefined)}
-     * @memberOf DeviceState
-     */
-    custom: string | undefined;
-
-    /**
-     * The nickname of the user.
-     * @type {(string | undefined)}
-     * @memberOf DeviceState
-     */
-    nickname: string | undefined;
-
-    /**
-     * 	If the user has a high server latency.
-     * @type {boolean}
-     * @memberOf DeviceState
-     */
-    slow_connection: boolean
-  }
-
-  type orientation = AirConsoleConstants.ORIENTATION_LANDSCAPE | AirConsoleConstants.ORIENTATION_PORTRAIT;
-
-  /**
-   * The configuration for the AirConsole constructor.
-   * @interface Config
-   */
-  interface Config {
-
-    /** 
-     * AirConsole.ORIENTATION_PORTRAIT or AirConsole.ORIENTATION_LANDSCAPE.
-     * @type {orientation}
-     * @memberOf Config
-     */
-    orientation: orientation;
 
     /**
      * 
-     * If set to true, you can call getServerTime() to get the time on
-     * the game server. Default is false.
-     * @type {boolean}
-     * @memberOf Config
+     * 
+     * @interface HighScore
      */
-    synchronize_time?: boolean;
+    interface HighScore {
+      /**
+       * The name of the level the user was playing
+       * @type {string}
+       * @memberOf HighScore
+       */
+      level_name: string;
 
-    /**
-     * Sets up the document so nothing is selectable, zoom is fixed to 1 and scrolling
-     * is disabled (iOS 8 clients drop out of fullscreen when scrolling). Default: true
-     * @type {boolean}
-     * @memberOf Config
-     */
-    setup_document?: boolean;
+      /**
+       * The version of the level the user was playing
+       * @type {string}
+       * @memberOf HighScore
+       */
+      level_version: string;
 
-    /**
-     * If set, onDeviceMotion gets called every "device_motion" milliseconds with data from the accelerometer and the gyroscope. Only for controllers.
-     * @type {number}
-     * @memberOf Config
-     */
-    device_motion?: number;
+      /**
+       * The score the user has achieved
+       * @type {number}
+       * @memberOf HighScoreclare var axD:AirConsole;
+       */
+      score: number;
+
+      /**
+       * 	A human readable version of score.
+       * @type {string}
+       * @memberOf HighScore
+       */
+      score_string: string;
+
+      /**
+       * A dictionary of rank type to actual ranks.
+       * @type {Object}
+       * @memberOf HighScore
+       */
+      ranks: Object;
+
+      /**
+       * Custom High Score data. Can be used to implement Ghost modes or to verify that it is not a fake high score.
+       * @type {*}
+       * @memberOf HighScore
+       */
+      data: any;
+
+      /**
+       * The unique ID of the users that achieved the high score.
+       * @type {string}
+       * @memberOf HighScore
+       */
+      uids: string;
+
+      /**
+       * The timestamp of the high score
+       * @type {number}
+       * @memberOf HighScore
+       */
+      timestamp: number;
+
+      /**
+       * The nicknames of the users
+       * @type {string}
+       * @memberOf HighScore
+       */
+      nicknames: string;
+
+      /**
+       * How the user relates to the current user - "requested" (a user which was requested) - "airconsole" (played AirConsole together) - "facebook" (a facebook friend) - "other" (about same skill level)
+       * @type {string}
+       * @memberOf HighScore
+       */
+      relationship: string;
+
+      /**
+       * The iso3166 country code
+       * @type {string}
+       * @memberOf HighScore
+       */
+      location_country_code: string;
+
+      /**
+       * The name of the country
+       * @type {string}
+       * @memberOf HighScore
+       */
+      location_country_name: string;
+
+      /**
+       * String	The iso3166 region code
+       * @type {string}
+       * @memberOf HighScore
+       */
+      location_region_code: string;
+
+      /**
+       * The name of the region
+       * @type {string}
+       * @memberOf HighScore
+       */
+      location_region_name: string;
+
+      /**
+       * The name of the city
+       * @type {string}
+       * @memberOf HighScore
+       */
+      location_city_name: string;
+
+      /**
+       * The URL that should be used to share this high score.
+       * @type {string}
+       * @memberOf HighScore
+       */
+      share_url: string;
+
+      /**
+       * The URL to an image that displays this high score.
+       * @type {string}
+       * @memberOf HighScore
+       */
+      share_image: string;
+    }
   }
-
-  /**
-   * 
-   * 
-   * @interface HighScore
-   */
-  export interface HighScore {
-    /**
-     * The name of the level the user was playing
-     * @type {string}
-     * @memberOf HighScore
-     */
-    level_name: string;
-
-    /**
-     * The version of the level the user was playing
-     * @type {string}
-     * @memberOf HighScore
-     */
-    level_version: string;
-
-    /**
-     * The score the user has achieved
-     * @type {number}
-     * @memberOf HighScore
-     */
-    score: number;
-
-    /**
-     * 	A human readable version of score.
-     * @type {string}
-     * @memberOf HighScore
-     */
-    score_string: string;
-
-    /**
-     * A dictionary of rank type to actual ranks.
-     * @type {Object}
-     * @memberOf HighScore
-     */
-    ranks: Object;
-
-    /**
-     * Custom High Score data. Can be used to implement Ghost modes or to verify that it is not a fake high score.
-     * @type {*}
-     * @memberOf HighScore
-     */
-    data: any;
-
-    /**
-     * The unique ID of the users that achieved the high score.
-     * @type {string}
-     * @memberOf HighScore
-     */
-    uids: string;
-
-    /**
-     * The timestamp of the high score
-     * @type {number}
-     * @memberOf HighScore
-     */
-    timestamp: number;
-
-    /**
-     * The nicknames of the users
-     * @type {string}
-     * @memberOf HighScore
-     */
-    nicknames: string;
-
-    /**
-     * How the user relates to the current user - "requested" (a user which was requested) - "airconsole" (played AirConsole together) - "facebook" (a facebook friend) - "other" (about same skill level)
-     * @type {string}
-     * @memberOf HighScore
-     */
-    relationship: string;
-
-    /**
-     * The iso3166 country code
-     * @type {string}
-     * @memberOf HighScore
-     */
-    location_country_code: string;
-
-    /**
-     * The name of the country
-     * @type {string}
-     * @memberOf HighScore
-     */
-    location_country_name: string;
-
-    /**
-     * String	The iso3166 region code
-     * @type {string}
-     * @memberOf HighScore
-     */
-    location_region_code: string;
-
-    /**
-     * The name of the region
-     * @type {string}
-     * @memberOf HighScore
-     */
-    location_region_name: string;
-
-    /**
-     * The name of the city
-     * @type {string}
-     * @memberOf HighScore
-     */
-    location_city_name: string;
-
-    /**
-     * The URL that should be used to share this high score.
-     * @type {string}
-     * @memberOf HighScore
-     */
-    share_url: string;
-
-    /**
-     * The URL to an image that displays this high score.
-     * @type {string}
-     * @memberOf HighScore
-     */
-    share_image: string;
-  }
-
-  enum AirConsoleConstants {
-
-    ORIENTATION_PORTRAIT = 0,
-    ORIENTATION_LANDSCAPE = 1,
-    SCREEN = 2
-  }
-
-
-  export class AirConsole {
+  class AirConsole {
 
     /**
      *  Your gateway object to AirConsole. There are getter and setter functions for all properties. Do not access properties of this object directly
@@ -217,7 +187,7 @@ declare namespace AirConsole {
      *  @constructor
      *  @param {opts}
      */
-    constructor(opts?: Config);
+    constructor(opts?: AirConsoleStates.Config);
 
 
     // STATIC PROPERTIES //
@@ -349,7 +319,7 @@ declare namespace AirConsole {
 
     /**
       * Gets called when a device updates it's custom DeviceState by calling setCustomDeviceState or setCustomDeviceStateProperty. Make sure you understand the power of device states:
-  
+   
       * device_id: the device ID that changed its custom DeviceState.
       * custom_data: The custom DeviceState data value
       * @param {number} device_id
@@ -370,7 +340,7 @@ declare namespace AirConsole {
      * 
      * @memberOf AirConsole
      */
-    onDeviceStateChange(device_id: number, user_data: DeviceState): void;
+    onDeviceStateChange(device_id: number, user_data: AirConsoleStates.DeviceState): void;
 
     /**
      * Sets the custom DeviceState of this device.
@@ -636,7 +606,7 @@ declare namespace AirConsole {
       *  Sets the device orientation.
       *  @param orientation {string} AirConsole.ORIENTATION_PORTRAIT or AirConsole.ORIENTATION_LANDSCAPE.
       */
-    setOrientation(orientation: orientation): void;
+    setOrientation(orientation: AirConsoleStates.orientation): void;
 
     /**
    *  Shows or hides the default UI.
@@ -696,7 +666,7 @@ declare namespace AirConsole {
      * @param {Array<HighScore>} high_scores
      * @memberOf AirConsole
      */
-    onHighScores(high_scores: Array<HighScore>): void;
+    onHighScores(high_scores: Array<AirConsoleStates.HighScore>): void;
 
     /**
      * Gets called when a high score was successfully stored. We highly recommend to read the High Score guide 
@@ -704,7 +674,7 @@ declare namespace AirConsole {
      * @param {HighScore} high_score
      * @memberOf AirConsole
      */
-    onHighScoreStored(high_score: HighScore | null): void;
+    onHighScoreStored(high_score: AirConsoleStates.HighScore | null): void;
 
 
     /**
@@ -745,10 +715,19 @@ declare namespace AirConsole {
      * @memberOf AirConsole
      */
     storeHighScore(level_name: string, level_version: string, score: number, uid?: string | Array<string>, data?: any, score_string?: string): void;
-
   }
 }
-declare module "AirConsole" {
-  export = AirConsole;
+/** 
+  * DeviceState contains information about a device in this session. Use the helper methods getUID, getNickname, getProfilePicture and getCustomDeviceState to access this data.
+  * @interface DeviceState
+  */
+
+
+declare enum AirConsoleConstants {
+
+  ORIENTATION_PORTRAIT = 0,
+  ORIENTATION_LANDSCAPE = 1,
+  SCREEN = 2
 }
 
+export { }
