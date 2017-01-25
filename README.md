@@ -12,6 +12,7 @@ Installation:
 then in your .ts file reference to a airconsole-typescript like so:
 
 `/// <reference path="../node_modules/airconsole-typescript/airconsole-typescript.d.ts" />`
+
 Voilà!
 
 You now got types for airconsole-api:
