@@ -6,6 +6,9 @@
   "dependencies": {
     "typescript": "^2.1.5"
   },
+  "scripts": {
+    "test":"tsc --noImplicitAny --module commonjs airconsole-typescript-test.ts"
+    }, 
   "devDependencies": {
     "tslint": "^4.3.1"
   },
